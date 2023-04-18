@@ -37,7 +37,9 @@ class _RtiCalendarState extends State<RtiCalendar> with AppMixin {
       currentDay: DateTime.now(),
       onDaySelected: (p, q) {
         if (widget.onDaySelected != null) {
-          if (widget.rangeStartDay != null && widget.rangeStartDay!.isAfter(p)) {
+          if (widget.rangeStartDay != null &&
+              widget.rangeStartDay!.isAfter(p) &&
+              !dateCompare(widget.rangeStartDay!, p)) {
           } else {
             widget.onDaySelected!(p, q);
           }
@@ -107,7 +109,7 @@ class _RtiCalendarState extends State<RtiCalendar> with AppMixin {
         selectedDecoration:
             BoxDecoration(color: widget.to ? Colors.transparent : const Color(0xff1DA1F2), shape: BoxShape.circle),
         outsideDaysVisible: false,
-        todayTextStyle: theme.bodySmall(color: widget.to ? Colors.black : const Color(0xff1DA1F2)),
+        todayTextStyle: theme.bodySmall(color: widget.to ? Colors.black.withOpacity(0.2) : const Color(0xff1DA1F2)),
         todayDecoration: const BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
       ),
       focusedDay: widget.to ? widget.focusToDate! : widget.date ?? DateTime.now(),

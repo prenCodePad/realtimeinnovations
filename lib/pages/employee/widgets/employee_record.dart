@@ -23,7 +23,7 @@ class EmployeeRecord extends StatelessWidget with AppMixin {
           SlidableAction(
             onPressed: (_) {
               employeeCtlr.deleteEmployee(employee);
-              ScaffoldMessenger.of(context).showSnackBar(snackBar(employee));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
             backgroundColor: const Color(0xFFF34642),
             foregroundColor: Colors.white,
@@ -58,7 +58,7 @@ class EmployeeRecord extends StatelessWidget with AppMixin {
     }
   }
 
-  SnackBar snackBar(Employee e) => SnackBar(
+  SnackBar get snackBar => SnackBar(
         content: const Text('Employee data has been deleted'),
         action: SnackBarAction(
           label: 'Undo',

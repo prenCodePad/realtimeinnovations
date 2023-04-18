@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/app_mixin.dart';
 import 'package:flutter_app/common/widgets/rti_calendar.dart';
 import 'package:flutter_app/common/widgets/rti_drop_down.dart';
 import 'package:flutter_app/common/widgets/rti_text_field.dart';
+import 'package:flutter_app/models/employee.dart';
 import 'package:flutter_app/pages/employee/widgets/rti_from_widget.dart';
 import 'package:flutter_app/pages/employee/widgets/rti_to_widget.dart';
 import 'package:flutter_app/routing/routes.dart';
@@ -19,6 +21,23 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
           () => Text(employeeCtlr.editMode.value ? 'Edit Employee Details' : 'Add Employee Details',
               style: theme.appBarHeading()),
         ),
+        actions: [
+          Obx(() {
+            return employeeCtlr.editMode.value
+                ? IconButton(
+                    onPressed: () {
+                      var editedEmployee = employeeCtlr.editedEmployee.value;
+                      if (editedEmployee != null) {
+                        employeeCtlr.deleteEmployee(editedEmployee!);
+                        Navigator.pushNamedAndRemoveUntil(context, Routes.employeeListPage, (route) => false);
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar(editedEmployee));
+                      }
+                    },
+                    icon: const Icon(CupertinoIcons.delete_solid),
+                  )
+                : const SizedBox();
+          }),
+        ],
         centerTitle: false,
       ),
       body: GestureDetector(
@@ -91,4 +110,14 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
       ),
     );
   }
+
+  SnackBar snackBar(Employee e) => SnackBar(
+        content: const Text('Employee data has been deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            employeeCtlr.undoDeleteEmployee(e);
+          },
+        ),
+      );
 }

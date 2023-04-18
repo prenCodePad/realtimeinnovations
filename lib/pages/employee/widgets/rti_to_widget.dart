@@ -25,6 +25,7 @@ class RtiTo extends StatelessWidget with AppMixin {
       ),
       child: InkWell(
         onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
           showGeneralDialog(
             context: context,
             pageBuilder: (context, animation, animationBuilder) {
@@ -112,7 +113,8 @@ class RtiTo extends StatelessWidget with AppMixin {
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: _text(),
-              hintStyle: theme.body1(color: dateTime == null ? const Color(0xff949C9E) : Colors.black),
+              contentPadding: const EdgeInsets.only(bottom: 12),
+              hintStyle: theme.body2(color: dateTime == null ? const Color(0xff949C9E) : Colors.black),
               //hintStyle: theme.overline(color: Colors.black),
               prefixIcon: _calendarIcon()),
         ),

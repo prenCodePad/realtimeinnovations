@@ -24,24 +24,28 @@ class RtiDropDown extends StatelessWidget with AppMixin {
                 var items = employeeCtlr.availableRoles;
                 return SizedBox(
                   height: Get.height * 0.3,
-                  child: ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            employeeCtlr.employeeRole.value = items[index];
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              items[index],
-                              style: theme.body(),
-                            ),
+                  child: ListView.separated(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          employeeCtlr.employeeRole.value = items[index];
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            items[index],
+                            style: theme.body(),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Container(width: Get.width, height: 0.5, color: const Color(0xff949C9E).withOpacity(0.2));
+                    },
+                  ),
                 );
               });
         },

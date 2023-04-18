@@ -15,6 +15,7 @@ class EmployeeController extends GetxController {
   var editMode = false.obs;
   var editEmployeeId = Rxn<String>();
   var employeeToFocusDate = DateTime.now().obs;
+  var editedEmployee = Rxn<Employee>();
 
   TextEditingController nameController = TextEditingController();
 
@@ -53,9 +54,11 @@ class EmployeeController extends GetxController {
     employeeRole.value = null;
     nameController.clear();
     employeeFromDate.value = DateTime.now();
+    employeeToFocusDate.value = DateTime.now();
     employeeToDate.value = null;
     editMode = false.obs;
     editEmployeeId.value = null;
+    editedEmployee.value = null;
   }
 
   Error? validate() {
@@ -104,6 +107,7 @@ class EmployeeController extends GetxController {
 
   void fillEditDetails(Employee employee) {
     editMode.value = true;
+    editedEmployee.value = employee;
     editEmployeeId.value = employee.id;
     nameController.text = employee.name;
     employeeRole.value = employee.role;
