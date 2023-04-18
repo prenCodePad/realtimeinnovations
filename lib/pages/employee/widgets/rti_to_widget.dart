@@ -90,7 +90,6 @@ class RtiTo extends StatelessWidget with AppMixin {
                               if (onCancel != null) {
                                 onCancel!();
                               }
-                              employeeCtlr.employeeToDate.value = null;
                               Navigator.of(context).pop();
                             }),
                             gap16W,

@@ -87,7 +87,6 @@ class RtiFrom extends StatelessWidget with AppMixin {
                               if (onCancel != null) {
                                 onCancel!();
                               }
-                              employeeCtlr.employeeFromDate.value = DateTime.now();
                               Navigator.of(context).pop();
                             }),
                             gap16W,

@@ -28,7 +28,7 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                     onPressed: () {
                       var editedEmployee = employeeCtlr.editedEmployee.value;
                       if (editedEmployee != null) {
-                        employeeCtlr.deleteEmployee(editedEmployee!);
+                        employeeCtlr.deleteEmployee(editedEmployee);
                         Navigator.pushNamedAndRemoveUntil(context, Routes.employeeListPage, (route) => false);
                         employeeCtlr.clear();
                         ScaffoldMessenger.of(context).showSnackBar(snackBar(editedEmployee));

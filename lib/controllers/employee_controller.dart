@@ -115,6 +115,9 @@ class EmployeeController extends GetxController {
     employeeRole.value = employee.role;
     employeeFromDate.value = employee.from;
     employeeToDate.value = employee.to;
+    if (employeeToDate.value != null) {
+      employeeToFocusDate.value = employeeToDate.value!;
+    }
   }
 
   bool editEmployee() {
