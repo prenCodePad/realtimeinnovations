@@ -87,8 +87,11 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                         onCancel: () {
                           if (!employeeCtlr.editMode.value) {
                             employeeCtlr.employeeToDate.value = null;
+                            employeeCtlr.employeeToFocusDate.value = employeeCtlr.employeeFromDate.value;
                           } else {
                             employeeCtlr.employeeToDate.value = employeeCtlr.editedEmployee.value!.to;
+                            employeeCtlr.employeeToFocusDate.value =
+                                employeeCtlr.editedEmployee.value!.to ?? employeeCtlr.employeeFromDate.value;
                           }
                         },
                       ))),
