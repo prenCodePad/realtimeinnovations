@@ -3,6 +3,8 @@ import 'package:flutter_app/common/app_mixin.dart';
 import 'package:flutter_app/common/widgets/rti_calendar.dart';
 import 'package:flutter_app/common/widgets/rti_drop_down.dart';
 import 'package:flutter_app/common/widgets/rti_text_field.dart';
+import 'package:flutter_app/pages/employee/widgets/rti_from_widget.dart';
+import 'package:flutter_app/pages/employee/widgets/rti_to_widget.dart';
 import 'package:flutter_app/routing/routes.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +35,7 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
               Row(
                 children: [
                   Obx(() => Expanded(
-                          child: RtiCalendar(
+                          child: RtiFrom(
                         dateTime: employeeCtlr.employeeFromDate.value,
                         onDateSelected: (p0) {
                           employeeCtlr.employeeFromDate.value = p0;
@@ -50,7 +52,7 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                         color: Color(0xff1DA1F2),
                       )),
                   Obx(() => Expanded(
-                          child: RtiCalendar(
+                          child: RtiTo(
                         dateTime: employeeCtlr.employeeToDate.value,
                         onDateSelected: (p0) {
                           employeeCtlr.employeeToDate.value = p0;
@@ -67,13 +69,16 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                 children: [
                   rtiCancelButton(onTap: () {
                     employeeCtlr.clear();
-                    Navigator.of(context).pop();
+                    Navigator.pushNamedAndRemoveUntil(context, Routes.employeeListPage, (route) => false);
                   }),
                   gap16W,
                   rtiSaveButton(onTap: () {
-                    employeeCtlr.editMode.value ? employeeCtlr.editEmployee() : employeeCtlr.addEmployee();
-                    employeeCtlr.clear();
-                    Navigator.pushNamedAndRemoveUntil(context, Routes.employeeListPage, (route) => false);
+                    bool action =
+                        employeeCtlr.editMode.value ? employeeCtlr.editEmployee() : employeeCtlr.addEmployee();
+                    if (action) {
+                      employeeCtlr.clear();
+                      Navigator.pushNamedAndRemoveUntil(context, Routes.employeeListPage, (route) => false);
+                    }
                   }),
                 ],
               )

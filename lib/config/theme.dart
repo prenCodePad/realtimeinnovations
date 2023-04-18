@@ -84,7 +84,7 @@ class AppTheme extends DefaultTheme {
       primary(size: 24, fontWeight: FontWeight.w600, color: color, fontStyle: fontStyle);
   @override
   TextStyle head1({Color? color, FontStyle? fontStyle}) =>
-      primary(size: 20, fontWeight: FontWeight.w800, color: color, fontStyle: fontStyle);
+      primary(size: 18, fontWeight: FontWeight.w500, color: color, fontStyle: fontStyle);
   @override
   TextStyle head2({Color? color, FontStyle? fontStyle}) =>
       primary(size: 20, fontWeight: FontWeight.w400, color: color, fontStyle: fontStyle);

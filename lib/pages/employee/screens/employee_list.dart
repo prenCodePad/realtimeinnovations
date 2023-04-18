@@ -39,21 +39,44 @@ class EmployeeListPage extends StatelessWidget with AppMixin {
                 _header('Current employees'),
                 Expanded(
                     flex: 1,
-                    child: ListView.builder(
-                      itemCount: currentEmployeeList.length,
-                      itemBuilder: (context, index) {
-                        return EmployeeRecord(employee: currentEmployeeList[index]);
-                      },
+                    child: Container(
+                      color: Colors.white,
+                      child: ListView.separated(
+                        itemCount: currentEmployeeList.length,
+                        itemBuilder: (context, index) {
+                          return EmployeeRecord(employee: currentEmployeeList[index]);
+                        },
+                        separatorBuilder: (context, index) {
+                          return Container(
+                              width: Get.width, height: 0.5, color: const Color(0xff949C9E).withOpacity(0.2));
+                        },
+                      ),
                     )),
                 _header('Previous employees'),
                 Expanded(
                     flex: 1,
-                    child: ListView.builder(
-                      itemCount: previousEmployeeList.length,
-                      itemBuilder: (context, index) {
-                        return EmployeeRecord(employee: previousEmployeeList[index]);
-                      },
+                    child: Container(
+                      color: Colors.white,
+                      child: ListView.separated(
+                        itemCount: previousEmployeeList.length,
+                        itemBuilder: (context, index) {
+                          return EmployeeRecord(employee: previousEmployeeList[index]);
+                        },
+                        separatorBuilder: (context, index) {
+                          return Container(
+                              width: Get.width, height: 0.5, color: const Color(0xff949C9E).withOpacity(0.2));
+                        },
+                      ),
                     )),
+                gap12,
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Swipe left to delete',
+                    style: theme.bodySmall(color: const Color(0xff949C9E)),
+                  ),
+                )
               ],
             ),
           );

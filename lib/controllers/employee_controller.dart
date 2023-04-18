@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/storage_prefs.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ class EmployeeController extends GetxController {
   var employeeToDate = Rxn<DateTime>();
   var editMode = false.obs;
   var editEmployeeId = Rxn<String>();
+  var employeeToFocusDate = DateTime.now().obs;
 
   TextEditingController nameController = TextEditingController();
 
@@ -21,17 +24,29 @@ class EmployeeController extends GetxController {
 
   @override
   void onInit() {
-    employeeList.value = employeeDatabase ?? [];
     super.onInit();
+    getEmployees();
   }
 
   @override
   void dispose() {
+    nameController.dispose();
     super.dispose();
   }
 
+  void getEmployees() {
+    if (employeeDatabase == null) {
+      return;
+    } else {
+      var data = List.from(jsonDecode(employeeDatabase));
+      data.map((e) {
+        employeeList.add(Employee.fromJson(e));
+      }).toList();
+    }
+  }
+
   void setEmployeeListInDatabase(List<Employee> employees) {
-    StoragePrefs.setStorageValue('employeelist', employees);
+    StoragePrefs.setStorageValue('employeelist', jsonEncode(employees.map((e) => e.toJson()).toList()));
   }
 
   void clear() {
@@ -44,7 +59,7 @@ class EmployeeController extends GetxController {
   }
 
   Error? validate() {
-    if (nameController.text.isEmpty) {
+    if (nameController.text.trim().isEmpty) {
       return const Error('Warning', 'Please provide name of the employee');
     } else if (employeeRole.value == null) {
       return const Error('Warning', 'Please provide role of the employee');
@@ -53,7 +68,7 @@ class EmployeeController extends GetxController {
     }
   }
 
-  void addEmployee() {
+  bool addEmployee() {
     Error? check = validate();
     if (check == null) {
       var id = uuid.v4();
@@ -64,13 +79,20 @@ class EmployeeController extends GetxController {
         from: employeeFromDate.value,
         to: employeeToDate.value,
       ));
-      //setEmployeeListInDatabase(employeeList);
+      setEmployeeListInDatabase(employeeList);
+      return true;
     } else {
       showSnackBar(check.title, check.message);
+      return false;
     }
   }
 
-  void showSnackBar(String title, String message) {
+  void undoDeleteEmployee(Employee e) {
+    employeeList.add(e);
+    setEmployeeListInDatabase(employeeList);
+  }
+
+  void showSnackBar(String message, String title) {
     Get.snackbar(
       title,
       message,
@@ -89,7 +111,7 @@ class EmployeeController extends GetxController {
     employeeToDate.value = employee.to;
   }
 
-  void editEmployee() {
+  bool editEmployee() {
     var index = employeeList.indexWhere((e) => e.id == editEmployeeId.value);
     Error? check = validate();
     if (index != -1) {
@@ -101,17 +123,20 @@ class EmployeeController extends GetxController {
           from: employeeFromDate.value,
           to: employeeToDate.value,
         );
-        //setEmployeeListInDatabase(employeeList);
+        setEmployeeListInDatabase(employeeList);
+        return true;
       } else {
         showSnackBar(check.title, check.message);
+        return false;
       }
     } else {
       showSnackBar('Error', 'Something Went Wrong');
+      return false;
     }
   }
 
   void deleteEmployee(Employee employee) {
     employeeList.removeWhere((e) => e.id == employee.id);
-    //setEmployeeListInDatabase(employeeList);
+    setEmployeeListInDatabase(employeeList);
   }
 }

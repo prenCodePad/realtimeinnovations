@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/app_mixin.dart';
 import 'package:flutter_app/models/employee.dart';
@@ -18,13 +19,15 @@ class EmployeeRecord extends StatelessWidget with AppMixin {
         Navigator.pushNamedAndRemoveUntil(context, Routes.addAndEditEmployeePage, (route) => false);
       },
       child: Slidable(
-        endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+        endActionPane: ActionPane(motion: const ScrollMotion(), extentRatio: 0.2, children: [
           SlidableAction(
-            onPressed: (_) => employeeCtlr.deleteEmployee(employee),
+            onPressed: (_) {
+              employeeCtlr.deleteEmployee(employee);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar(employee));
+            },
             backgroundColor: const Color(0xFFF34642),
             foregroundColor: Colors.white,
-            icon: Icons.delete_outline,
-            label: '',
+            icon: CupertinoIcons.delete_solid,
           ),
         ]),
         child: Container(
@@ -54,4 +57,14 @@ class EmployeeRecord extends StatelessWidget with AppMixin {
       return '${DateFormat('d MMM, y').format(employee.from)} - ${DateFormat('d MMM, y').format(employee.to!)}';
     }
   }
+
+  SnackBar snackBar(Employee e) => SnackBar(
+        content: const Text('Employee data has been deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            employeeCtlr.undoDeleteEmployee(employee);
+          },
+        ),
+      );
 }
