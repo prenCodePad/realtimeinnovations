@@ -64,7 +64,11 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                           employeeCtlr.employeeFromDate.value = p0;
                         },
                         onCancel: () {
-                          employeeCtlr.employeeFromDate.value = DateTime.now();
+                          if (!employeeCtlr.editMode.value) {
+                            employeeCtlr.employeeFromDate.value = DateTime.now();
+                          } else {
+                            employeeCtlr.employeeFromDate.value = employeeCtlr.editedEmployee.value!.from;
+                          }
                         },
                       ))),
                   Container(
@@ -81,7 +85,11 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
                           employeeCtlr.employeeToDate.value = p0;
                         },
                         onCancel: () {
-                          employeeCtlr.employeeToDate.value = null;
+                          if (!employeeCtlr.editMode.value) {
+                            employeeCtlr.employeeToDate.value = null;
+                          } else {
+                            employeeCtlr.employeeToDate.value = employeeCtlr.editedEmployee.value!.to;
+                          }
                         },
                       ))),
                 ],
