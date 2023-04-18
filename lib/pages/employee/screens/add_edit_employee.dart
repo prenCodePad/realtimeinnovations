@@ -15,7 +15,10 @@ class AddAndEditEmployee extends StatelessWidget with AppMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Employee Details', style: theme.appBarHeading()),
+        title: Obx(
+          () => Text(employeeCtlr.editMode.value ? 'Edit Employee Details' : 'Add Employee Details',
+              style: theme.appBarHeading()),
+        ),
         centerTitle: false,
       ),
       body: GestureDetector(
