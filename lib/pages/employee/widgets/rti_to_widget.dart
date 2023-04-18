@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/app_mixin.dart';
 import 'package:flutter_app/common/widgets/rti_calendar.dart';
