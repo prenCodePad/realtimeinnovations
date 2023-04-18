@@ -75,13 +75,15 @@ class EmployeeController extends GetxController {
     Error? check = validate();
     if (check == null) {
       var id = uuid.v4();
-      employeeList.add(Employee(
-        id: id,
-        name: nameController.text,
-        role: employeeRole.value!,
-        from: employeeFromDate.value,
-        to: employeeToDate.value,
-      ));
+      employeeList.insert(
+          0,
+          Employee(
+            id: id,
+            name: nameController.text,
+            role: employeeRole.value!,
+            from: employeeFromDate.value,
+            to: employeeToDate.value,
+          ));
       setEmployeeListInDatabase(employeeList);
       return true;
     } else {
@@ -91,7 +93,7 @@ class EmployeeController extends GetxController {
   }
 
   void undoDeleteEmployee(Employee e) {
-    employeeList.add(e);
+    employeeList.insert(0, e);
     setEmployeeListInDatabase(employeeList);
   }
 
