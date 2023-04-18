@@ -105,7 +105,7 @@ class _RtiCalendarState extends State<RtiCalendar> with AppMixin {
         rangeHighlightColor: Colors.transparent,
         selectedTextStyle: widget.to && widget.date != null && dateCompare(widget.date!, widget.focusToDate!)
             ? theme.bodySmall(color: const Color(0xff1DA1F2))
-            : theme.bodySmall(color: Colors.white),
+            : theme.bodySmall(color: widget.to ? Colors.black : Colors.white),
         selectedDecoration:
             BoxDecoration(color: widget.to ? Colors.transparent : const Color(0xff1DA1F2), shape: BoxShape.circle),
         outsideDaysVisible: false,

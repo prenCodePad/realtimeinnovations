@@ -91,9 +91,7 @@ class RtiFrom extends StatelessWidget with AppMixin {
                             }),
                             gap16W,
                             rtiSaveButton(onTap: () {
-                              if (!employeeCtlr.editMode.value) {
-                                employeeCtlr.employeeToFocusDate.value = employeeCtlr.employeeFromDate.value;
-                              }
+                              employeeCtlr.employeeToFocusDate.value = employeeCtlr.employeeFromDate.value;
                               Navigator.of(context).pop();
                             }),
                           ],
